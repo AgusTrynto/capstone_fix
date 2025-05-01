@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/login_controller.dart';
+import '../../../routes/app_routes.dart';
 
 class LoginPage extends GetView<LoginController> {
-  
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -26,7 +26,8 @@ class LoginPage extends GetView<LoginController> {
               const SizedBox(height: 8),
               Text(
                 'Login untuk mulai menilai outfit keren!',
-                style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey[700]),
+                style: theme.textTheme.bodyMedium
+                    ?.copyWith(color: Colors.grey[700]),
               ),
               const SizedBox(height: 40),
               TextField(
@@ -51,6 +52,12 @@ class LoginPage extends GetView<LoginController> {
                   ),
                 ),
                 obscureText: true,
+              ),
+              TextButton(
+                onPressed: () {
+                  Get.toNamed(Routes.FORGOT_PASSWORD);
+                },
+                child: Text("Lupa Password?"),
               ),
               const SizedBox(height: 30),
               SizedBox(
@@ -79,7 +86,7 @@ class LoginPage extends GetView<LoginController> {
                     style: TextStyle(color: Colors.grey[600]),
                   ),
                   TextButton(
-                    onPressed: () => Get.toNamed('/register'),
+                    onPressed: () => Get.toNamed(Routes.REGISTER),
                     child: Text(
                       'Daftar',
                       style: TextStyle(fontWeight: FontWeight.bold),
