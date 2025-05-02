@@ -8,6 +8,10 @@ abstract class Routes {
   static const OTP_VERIFICATION = _Paths.OTP_VERIFICATION;
   static const VERIFY_RESET = _Paths.VERIFY_RESET;
   static const SET_NEW_PASSWORD = _Paths.SET_NEW_PASSWORD;
+  static const ARTIKEL = _Paths.ARTIKEL;
+  static const DETAILPAGE = _Paths.DETAILPAGE;
+  static const FAVORITE = _Paths.FAVORITE;
+  static const PROFILE = _Paths.PROFILE;
 }
 
 abstract class _Paths {
@@ -20,4 +24,8 @@ abstract class _Paths {
   static const OTP_VERIFICATION = '/otp-verification';
   static const VERIFY_RESET = '/verify-reset';
   static const SET_NEW_PASSWORD = '/set-new-password';
+  static const ARTIKEL = '/artikel';
+  static const DETAILPAGE = '/detailpage';
+  static const FAVORITE = '/favorite';
+  static const PROFILE = '/profile';
 }

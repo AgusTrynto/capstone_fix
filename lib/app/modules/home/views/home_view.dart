@@ -1,9 +1,47 @@
 import 'package:flutter/material.dart';
+import '../widgets/custom_card.dart'; // sesuaikan path
+import '../../artikel/views/artikel_view.dart'; // sesuaikan path
 import 'package:get/get.dart';
-import '../controllers/home_controller.dart';
+import '../../favorite/views/favorite_view.dart'; // sesuaikan path
+import '../../profile/views/profile_view.dart'; // sesuaikan path
 
-class HomePage extends GetView<HomeController> {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final List<Map<String, dynamic>> outfits = [
+    {
+      'id': '1',
+      'img': 'assets/images/baju.jpg',
+      'title': 'Outfit Kasual',
+      'isFavorited': false,
+    },
+    {
+      'id': '2',
+      'img': 'assets/images/baju.jpg',
+      'title': 'Outfit Formal',
+      'isFavorited': true,
+    },
+    {
+      'id': '3',
+      'img': 'assets/images/baju.jpg',
+      'title': 'Outfit Sporty',
+      'isFavorited': false,
+    },
+  ];
+
+  void toggleFavorite(String id) {
+    setState(() {
+      final index = outfits.indexWhere((item) => item['id'] == id);
+      if (index != -1) {
+        outfits[index]['isFavorited'] = !outfits[index]['isFavorited'];
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +63,12 @@ class HomePage extends GetView<HomeController> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Halo, selamat datang agus!',
+                'Halo, selamat datang!',
                 style: theme.textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
@@ -43,13 +81,20 @@ class HomePage extends GetView<HomeController> {
                   color: Colors.grey[700],
                 ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 16),
               Expanded(
-                child: Center(
-                  child: Image.asset(
-                    'assets/images/baju.jpg', // pastikan asset ini ada di pubspec.yaml
-                    height: 250,
-                  ),
+                child: ListView.builder(
+                  itemCount: outfits.length,
+                  itemBuilder: (context, index) {
+                    final item = outfits[index];
+                    return CustomCard(
+                      id: item['id'],
+                      img: item['img'],
+                      title: item['title'],
+                      isFavorited: item['isFavorited'],
+                      onFavoriteToggle: () => toggleFavorite(item['id']),
+                    );
+                  },
                 ),
               ),
             ],
@@ -73,31 +118,27 @@ class HomePage extends GetView<HomeController> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconButton(
-                icon: const Icon(Icons.home),
-                onPressed: () {
-                  print('Home');
-                },
-              ),
+              IconButton(icon: const Icon(Icons.home), onPressed: () {}),
               IconButton(
                 icon: const Icon(Icons.note),
                 onPressed: () {
-                  print('Artikel');
+                  Get.to(() => const ArtikelView());
                 },
               ),
+
               const SizedBox(width: 40), // spasi untuk kamera
-              IconButton(
-                icon: const Icon(Icons.favorite),
-                onPressed: () {
-                  print('Favorit');
-                },
-              ),
-              IconButton(
-                icon: const Icon(Icons.settings),
-                onPressed: () {
-                  print('Pengaturan');
-                },
-              ),
+                IconButton(
+                  icon: const Icon(Icons.favorite),
+                  onPressed: () {
+                    Get.to(() => const FavoriteView());
+                  },
+                ),
+                 IconButton(
+                  icon: const Icon(Icons.person),
+                  onPressed: () {
+                    Get.to(() => const ProfileView());
+                  },
+        ),
             ],
           ),
         ),
