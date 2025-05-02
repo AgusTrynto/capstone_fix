@@ -30,7 +30,7 @@ class HomePage extends GetView<HomeController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Halo, selamat datang!',
+                'Halo, selamat datang agus!',
                 style: theme.textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
