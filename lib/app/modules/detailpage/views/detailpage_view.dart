@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DetailPage extends StatelessWidget {
+class DetailPage extends StatefulWidget {
   final String id;
   final String img;
   final String title;
@@ -13,6 +13,25 @@ class DetailPage extends StatelessWidget {
     required this.title,
     this.isFavorited = false,
   });
+
+  @override
+  State<DetailPage> createState() => _DetailPageState();
+}
+
+class _DetailPageState extends State<DetailPage> {
+  late bool _isFavorited;
+
+  @override
+  void initState() {
+    super.initState();
+    _isFavorited = widget.isFavorited;
+  }
+
+  void _toggleFavorite() {
+    setState(() {
+      _isFavorited = !_isFavorited;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +56,7 @@ class DetailPage extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(16),
                 child: Image.asset(
-                  img,
+                  widget.img,
                   height: 250,
                   fit: BoxFit.cover,
                 ),
@@ -48,15 +67,18 @@ class DetailPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  title,
+                  widget.title,
                   style: theme.textTheme.headlineSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Icon(
-                  isFavorited ? Icons.favorite : Icons.favorite_border,
-                  color: isFavorited ? Colors.red : Colors.grey,
-                  size: 28,
+                GestureDetector(
+                  onTap: _toggleFavorite,
+                  child: Icon(
+                    _isFavorited ? Icons.favorite : Icons.favorite_border,
+                    color: _isFavorited ? Colors.red : Colors.grey,
+                    size: 28,
+                  ),
                 ),
               ],
             ),
