@@ -7,6 +7,8 @@ class ArtikelView extends GetView<ArtikelController> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     final List<Map<String, String>> articles = [
       {
         'image': 'assets/images/baju.jpg',
@@ -41,19 +43,29 @@ class ArtikelView extends GetView<ArtikelController> {
     ];
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Artikel Fashion'),
+        title: Text(
+          'Artikel Fashion',
+          style: theme.textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
         centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        foregroundColor: Colors.black,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(16.0),
         child: GridView.builder(
           itemCount: articles.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3, // 3 kolom
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-            childAspectRatio: 0.55, // Sesuaikan agar tinggi terlihat pas
+            crossAxisCount: 2, // Lebih proporsional
+            mainAxisSpacing: 16,
+            crossAxisSpacing: 16,
+            childAspectRatio: 0.72,
           ),
           itemBuilder: (context, index) {
             final article = articles[index];
@@ -83,40 +95,53 @@ class ArtikelCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+    final theme = Theme.of(context);
+
+    return Material(
       elevation: 4,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-            child: Image.asset(
-              image,
-              height: 100,
-              width: double.infinity,
-              fit: BoxFit.cover,
+      borderRadius: BorderRadius.circular(16),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(16),
+        onTap: () {
+          // TODO: Buka detail artikel jika ada
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+              child: Image.asset(
+                image,
+                height: 140,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              child: Text(
+                title,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(
-              description,
-              style: const TextStyle(fontSize: 12),
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Text(
+                description,
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: Colors.grey[700],
+                ),
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-          ),
-        ],
+            const SizedBox(height: 12),
+          ],
+        ),
       ),
     );
   }

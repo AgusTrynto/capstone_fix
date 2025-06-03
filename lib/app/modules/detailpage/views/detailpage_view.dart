@@ -38,60 +38,87 @@ class _DetailPageState extends State<DetailPage> {
     final theme = Theme.of(context);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        foregroundColor: Colors.black,
         title: Text(
           'Detail Outfit',
           style: theme.textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 0,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Image.asset(
-                  widget.img,
-                  height: 250,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            const SizedBox(height: 24),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Stack(
               children: [
-                Text(
-                  widget.title,
-                  style: theme.textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
+                Hero(
+                  tag: 'image_${widget.id}',
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Image.asset(
+                      widget.img,
+                      width: double.infinity,
+                      height: 260,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-                GestureDetector(
-                  onTap: _toggleFavorite,
-                  child: Icon(
-                    _isFavorited ? Icons.favorite : Icons.favorite_border,
-                    color: _isFavorited ? Colors.red : Colors.grey,
-                    size: 28,
+                Positioned(
+                  top: 16,
+                  right: 16,
+                  child: GestureDetector(
+                    onTap: _toggleFavorite,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white70,
+                      child: Icon(
+                        _isFavorited ? Icons.favorite : Icons.favorite_border,
+                        color: _isFavorited ? Colors.red : Colors.grey[700],
+                      ),
+                    ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 24),
             Text(
-              'Deskripsi Outfit:',
-              style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+              widget.title,
+              style: theme.textTheme.headlineSmall?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              'Deskripsi Outfit',
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.w600,
+              ),
             ),
             const SizedBox(height: 8),
             Text(
-              'Outfit ini cocok digunakan untuk acara santai, hangout bersama teman, ataupun acara kasual lainnya.',
-              style: theme.textTheme.bodyMedium,
+              'Outfit ini cocok digunakan untuk acara santai, hangout bersama teman, ataupun acara kasual lainnya. Dengan desain yang modern dan bahan yang nyaman, kamu bisa tampil stylish setiap saat.',
+              style: theme.textTheme.bodyMedium?.copyWith(color: Colors.grey[700]),
             ),
+            const SizedBox(height: 30),
+            Center(
+              child: ElevatedButton.icon(
+                onPressed: () {},
+                icon: const Icon(Icons.shopping_bag),
+                label: const Text('Coba Sekarang'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 4,
+                ),
+              ),
+            )
           ],
         ),
       ),

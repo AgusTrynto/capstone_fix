@@ -21,46 +21,77 @@ class CustomCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      elevation: 4,
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      child: ListTile(
-        contentPadding: const EdgeInsets.all(16),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => DetailPage(
-                id: id,
-                img: img,
-                title: title,
-                isFavorited: isFavorited,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => DetailPage(
+              id: id,
+              img: img,
+              title: title,
+              isFavorited: isFavorited,
+            ),
+          ),
+        );
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 10,
+              offset: Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              children: [
+                Hero(
+                  tag: 'image_$id',
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                    child: Image.asset(
+                      img,
+                      width: double.infinity,
+                      height: 180,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 12,
+                  right: 12,
+                  child: GestureDetector(
+                    onTap: onFavoriteToggle,
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white70,
+                      child: Icon(
+                        isFavorited ? Icons.favorite : Icons.favorite_border,
+                        color: isFavorited ? Colors.red : Colors.grey[600],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                title,
+                style: theme.textTheme.titleMedium?.copyWith(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
+                ),
               ),
             ),
-          );
-        },
-        leading: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: Image.asset(
-            img,
-            width: 60,
-            height: 60,
-            fit: BoxFit.cover,
-          ),
-        ),
-        title: Text(
-          title,
-          style: theme.textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        trailing: IconButton(
-          icon: Icon(
-            isFavorited ? Icons.favorite : Icons.favorite_border,
-            color: isFavorited ? Colors.red : Colors.grey,
-          ),
-          onPressed: onFavoriteToggle,
+          ],
         ),
       ),
     );

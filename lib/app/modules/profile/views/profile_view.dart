@@ -8,19 +8,25 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    // Contoh data user (bisa diganti dengan data asli dari controller)
+    // Contoh data user (bisa diganti dari controller)
     final String username = "fashionlover123";
-    final String profileImage = "assets/images/profile.jpg"; // ganti dengan path img kamu
+    final String profileImage = "assets/images/profile.jpg"; // ganti sesuai asetmu
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profil'),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
-        elevation: 0,
-        centerTitle: true,
-      ),
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text(
+          'Profil',
+          style: theme.textTheme.titleLarge?.copyWith(
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        foregroundColor: Colors.black,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
@@ -38,21 +44,33 @@ class ProfileView extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            const SizedBox(height: 12),
+            Text(
+              "Pecinta fashion dan tren terbaru.",
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: Colors.grey[700],
+              ),
+              textAlign: TextAlign.center,
+            ),
             const Spacer(),
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
+              child: ElevatedButton.icon(
                 onPressed: () {
-                  // Tambahkan logika logout di sini
                   Get.snackbar("Logout", "Berhasil logout");
                 },
+                icon: const Icon(Icons.logout, color: Colors.white),
+                label: const Text(
+                  "Logout",
+                  style: TextStyle(color: Colors.white),
+                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                ),
-                child: const Text(
-                  "Logout",
-                  style: TextStyle(color: Colors.white),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  elevation: 2,
                 ),
               ),
             ),
