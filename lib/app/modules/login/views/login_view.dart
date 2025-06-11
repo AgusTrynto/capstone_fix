@@ -15,7 +15,7 @@ class LoginPage extends GetView<LoginController> {
           // Background Gambar
           SizedBox.expand(
             child: Image.asset(
-              'assets/images/baju.jpg', // Ganti dengan path gambar kamu
+              'assets/images/outfit.jpg', // Ganti dengan path gambar kamu
               fit: BoxFit.cover,
             ),
           ),
