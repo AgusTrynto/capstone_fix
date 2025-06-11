@@ -17,7 +17,7 @@ class SetNewPasswordController extends GetxController {
     isLoading.value = true;
 
     final res = await http.post(
-      Uri.parse("http://localhost:5000/api/reset-password"),
+      Uri.parse("https://873e-103-18-35-77.ngrok-free.app/api/reset-password"),
       headers: {"Content-Type": "application/json"},
       body: '{"email": "$email", "new_password": "${passwordController.text}"}',
     );

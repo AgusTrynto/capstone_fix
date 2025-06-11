@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../controllers/login_controller.dart';
 import '../../../routes/app_routes.dart';
 
@@ -44,7 +45,6 @@ class LoginPage extends GetView<LoginController> {
                     child: Icon(Icons.checkroom, size: 42, color: Colors.white),
                   ),
                   const SizedBox(height: 24),
-
                   Text(
                     'Welcome Back!',
                     style: theme.textTheme.headlineLarge?.copyWith(
@@ -61,7 +61,6 @@ class LoginPage extends GetView<LoginController> {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 40),
-
                   Container(
                     padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
@@ -133,6 +132,29 @@ class LoginPage extends GetView<LoginController> {
                                 letterSpacing: 1.2,
                                 color: Colors.white,
                               ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child: OutlinedButton.icon(
+                            onPressed: controller.loginWithGoogle,
+                            icon: Icon(FontAwesomeIcons.google, color: Colors.red),
+                            label: Text(
+                              'Login dengan Google',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87,
+                              ),
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              side: BorderSide(color: Colors.grey.shade400),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14),
+                              ),
+                              backgroundColor: Colors.white,
                             ),
                           ),
                         ),

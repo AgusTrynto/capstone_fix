@@ -16,7 +16,7 @@ class VerifyResetController extends GetxController {
   void verifyCode() async {
     isLoading.value = true;
     final res = await http.post(
-      Uri.parse("http://localhost:5000/api/verify-reset"),
+      Uri.parse("https://873e-103-18-35-77.ngrok-free.app/api/verify-reset"),
       headers: {"Content-Type": "application/json"},
       body: '{"email": "$email", "code": "${codeController.text}"}',
     );
