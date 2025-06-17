@@ -28,14 +28,18 @@ class RegisterController extends GetxController {
 
     try {
       final res = await http.post(
-        Uri.parse("http://localhost:5000/api/request-register"),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({
-          "username": username,
-          "email": email,
-          "password": password,
-        }),
-      );
+            Uri.parse("https://873e-103-18-35-77.ngrok-free.app/api/request-register"),
+            headers: {
+              "Content-Type": "application/json",
+              "x-api-key": "123",
+            },
+            body: jsonEncode({
+              "username": username,
+              "email": email,
+              "password": password,
+            }),
+          );
+
 
       if (res.statusCode == 200) {
         Get.toNamed(Routes.OTP_VERIFICATION, arguments: {"email": email});
