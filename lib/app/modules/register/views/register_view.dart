@@ -15,7 +15,7 @@ class RegisterPage extends GetView<RegisterController> {
           // Background Gambar
           SizedBox.expand(
             child: Image.asset(
-              'assets/images/outfit.jpg', // Ganti sesuai path gambar kamu
+              'assets/images/outfit.jpg',
               fit: BoxFit.cover,
             ),
           ),
@@ -76,6 +76,18 @@ class RegisterPage extends GetView<RegisterController> {
                     child: Column(
                       children: [
                         TextField(
+                          controller: controller.usernameController,
+                          decoration: InputDecoration(
+                            labelText: 'Username',
+                            prefixIcon: Icon(Icons.person_outline),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(14),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+
+                        TextField(
                           controller: controller.emailController,
                           decoration: InputDecoration(
                             labelText: 'Email',
@@ -87,6 +99,7 @@ class RegisterPage extends GetView<RegisterController> {
                           keyboardType: TextInputType.emailAddress,
                         ),
                         const SizedBox(height: 20),
+
                         TextField(
                           controller: controller.passwordController,
                           decoration: InputDecoration(
@@ -99,6 +112,7 @@ class RegisterPage extends GetView<RegisterController> {
                           obscureText: true,
                         ),
                         const SizedBox(height: 20),
+
                         TextField(
                           controller: controller.confirmPasswordController,
                           decoration: InputDecoration(
@@ -111,6 +125,7 @@ class RegisterPage extends GetView<RegisterController> {
                           obscureText: true,
                         ),
                         const SizedBox(height: 30),
+
                         SizedBox(
                           width: double.infinity,
                           height: 50,
@@ -138,13 +153,11 @@ class RegisterPage extends GetView<RegisterController> {
                     ),
                   ),
                   const SizedBox(height: 24),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "Sudah punya akun?",
-                        style: TextStyle(color: Colors.white70),
-                      ),
+                      Text("Sudah punya akun?", style: TextStyle(color: Colors.white70)),
                       TextButton(
                         onPressed: () => Get.toNamed(Routes.LOGIN),
                         child: Text(
