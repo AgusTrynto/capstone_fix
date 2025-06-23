@@ -12,6 +12,8 @@ abstract class Routes {
   static const DETAILPAGE = _Paths.DETAILPAGE;
   static const FAVORITE = _Paths.FAVORITE;
   static const PROFILE = _Paths.PROFILE;
+  static const CAMERAVIEW = _Paths.CAMERAVIEW;
+  static const STREAMLIT = _Paths.STREAMLIT;
 }
 
 abstract class _Paths {
@@ -28,4 +30,6 @@ abstract class _Paths {
   static const DETAILPAGE = '/detailpage';
   static const FAVORITE = '/favorite';
   static const PROFILE = '/profile';
+  static const CAMERAVIEW = '/cameraview';
+  static const STREAMLIT = '/streamlit';
 }

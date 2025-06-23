@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print('Buka Kamera!');
+          Get.toNamed('/cameraview'); // Arahkan ke halaman camera
         },
         backgroundColor: Colors.black,
         child: const Icon(Icons.camera_alt, color: Colors.white),

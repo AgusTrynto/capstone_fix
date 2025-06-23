@@ -17,7 +17,7 @@ class OtpVerificationController extends GetxController {
     isLoading.value = true;
 
     final res = await http.post(
-      Uri.parse("https://873e-103-18-35-77.ngrok-free.app/api/verify-email"),
+      Uri.parse("https://b007-103-166-147-253.ngrok-free.app/api/verify-email"),
       headers: {"Content-Type": "application/json"},
       body: '{"email": "$email", "code": "${codeController.text}"}',
     );
@@ -34,7 +34,7 @@ class OtpVerificationController extends GetxController {
 
   void resendCode() async {
     final res = await http.post(
-      Uri.parse("https://873e-103-18-35-77.ngrok-free.app/api/request-register"),
+      Uri.parse("https://b007-103-166-147-253.ngrok-free.app/api/request-register"),
       headers: {"Content-Type": "application/json"},
       body: '{"email": "$email", "password": "dummy"}',
     );

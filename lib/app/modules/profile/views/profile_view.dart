@@ -8,7 +8,6 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    // Contoh data user (bisa diganti dari controller)
     final String username = "fashionlover123";
     final String profileImage = "assets/images/profile.jpg"; // ganti sesuai asetmu
 
@@ -53,6 +52,33 @@ class ProfileView extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const Spacer(),
+
+            /// 🔥 Tambahan tombol menuju halaman Streamlit
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  Get.toNamed('/streamlit');
+                },
+                icon: const Icon(Icons.explore, color: Colors.white),
+                label: const Text(
+                  "Lihat Streamlit",
+                  style: TextStyle(color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepPurple,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  elevation: 2,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            /// Tombol Logout
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(

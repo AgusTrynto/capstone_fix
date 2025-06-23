@@ -25,7 +25,7 @@ class RegisterController extends GetxController {
 
     try {
       final res = await http.post(
-        Uri.parse("https://873e-103-18-35-77.ngrok-free.app/api/request-register"),
+        Uri.parse("https://b007-103-166-147-253.ngrok-free.app/api/request-register"),
         headers: {
           "Content-Type": "application/json",
           "x-api-key": "123"},

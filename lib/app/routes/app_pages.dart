@@ -1,3 +1,5 @@
+import 'package:capstone/app/modules/cameraview/bindings/cameraview_binding.dart';
+import 'package:capstone/app/modules/cameraview/views/cameraview_view.dart';
 import 'package:capstone/app/modules/forgot_password/bindings/forgot_password_binding.dart';
 import 'package:capstone/app/modules/forgot_password/views/forgot_password_view.dart';
 import 'package:capstone/app/modules/otp_verification/bindings/otp_verification_binding.dart';
@@ -8,6 +10,8 @@ import 'package:capstone/app/modules/splash/bindings/splash_binding.dart';
 import 'package:capstone/app/modules/splash/views/splash_view.dart';
 import 'package:capstone/app/modules/verify_reset/bindings/verify_reset_binding.dart';
 import 'package:capstone/app/modules/verify_reset/views/verify_reset_view.dart';
+import 'package:capstone/app/modules/streamlit/bindings/streamlit_binding.dart';
+import 'package:capstone/app/modules/streamlit/views/streamlit_view.dart';
 import 'package:get/get.dart';
 
 import '../modules/home/bindings/home_binding.dart';
@@ -56,7 +60,17 @@ class AppPages {
       name: Routes.SET_NEW_PASSWORD,
       page: () => SetNewPasswordView(),
       binding: SetNewPasswordBinding(),
-    )
+    ),
+    GetPage(
+      name: Routes.CAMERAVIEW,
+      page:  () => CameraviewView(),
+      binding: CameraviewBinding(),
+    ),
+        GetPage(
+      name: Routes.STREAMLIT,
+      page: () => StreamlitView(),
+      binding: StreamlitBinding()
+    ),
     // nanti tambahin halaman Home kalau mau
   ];
 }
