@@ -14,6 +14,7 @@ abstract class Routes {
   static const PROFILE = _Paths.PROFILE;
   static const CAMERAVIEW = _Paths.CAMERAVIEW;
   static const STREAMLIT = _Paths.STREAMLIT;
+  static const PAKAIAN = _Paths.PAKAIAN;
 }
 
 abstract class _Paths {
@@ -32,4 +33,5 @@ abstract class _Paths {
   static const PROFILE = '/profile';
   static const CAMERAVIEW = '/cameraview';
   static const STREAMLIT = '/streamlit';
+  static const PAKAIAN = '/pakaian';
 }

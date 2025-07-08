@@ -51,9 +51,40 @@ class ProfileView extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
+            const SizedBox(height: 32),
+
+            /// 🧥 Menu Pakaian
+            GestureDetector(
+              onTap: () {
+                Get.toNamed('/pakaian'); // Pastikan route ini sudah ada
+              },
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                elevation: 3,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.checkroom, size: 28, color: Colors.deepPurple),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Text(
+                          "Pakaian Saya",
+                          style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                      const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
             const Spacer(),
 
-            /// 🔥 Tambahan tombol menuju halaman Streamlit
+            /// 🔥 Tombol Streamlit
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -61,16 +92,11 @@ class ProfileView extends StatelessWidget {
                   Get.toNamed('/streamlit');
                 },
                 icon: const Icon(Icons.explore, color: Colors.white),
-                label: const Text(
-                  "Lihat Streamlit",
-                  style: TextStyle(color: Colors.white),
-                ),
+                label: const Text("Lihat Streamlit", style: TextStyle(color: Colors.white)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.deepPurple,
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   elevation: 2,
                 ),
               ),
@@ -78,7 +104,7 @@ class ProfileView extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-            /// Tombol Logout
+            /// 🔒 Tombol Logout
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
@@ -86,16 +112,11 @@ class ProfileView extends StatelessWidget {
                   Get.snackbar("Logout", "Berhasil logout");
                 },
                 icon: const Icon(Icons.logout, color: Colors.white),
-                label: const Text(
-                  "Logout",
-                  style: TextStyle(color: Colors.white),
-                ),
+                label: const Text("Logout", style: TextStyle(color: Colors.white)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.black,
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                   elevation: 2,
                 ),
               ),

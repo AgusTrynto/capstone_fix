@@ -13,7 +13,7 @@ class ForgotPasswordController extends GetxController {
     isLoading.value = true;
 
     final res = await http.post(
-      Uri.parse('https://b007-103-166-147-253.ngrok-free.app/api/request-reset'),
+      Uri.parse('https://5f4df4eb7c85.ngrok-free.app/api/request-reset'),
       headers: {'Content-Type': 'application/json'},
       body: '{"email": "$email"}',
     );
