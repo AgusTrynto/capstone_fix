@@ -30,12 +30,10 @@ class CameraviewController extends GetxController {
   var bajuList = <String>[].obs;
   var celanaList = <String>[].obs;
 
-  final celanaInfo = <String, String>{}.obs; // image_url -> panjang_pendek
+  final celanaData = <String, Pakaian>{}.obs;
 
   var selectedBaju = ''.obs;
   var selectedCelana = ''.obs;
-
-  String? celanaType;
 
   @override
   void onInit() {
@@ -45,50 +43,89 @@ class CameraviewController extends GetxController {
     requestPermission();
   }
 
-Future<void> fetchUserPakaian() async {
-  final token = box.read('token');
-  if (token == null) return;
+  Future<void> fetchUserPakaian() async {
+    final token = box.read('token');
+    if (token == null) return;
 
-  try {
-    final response = await http.get(
-      Uri.parse('https://5f4df4eb7c85.ngrok-free.app/pakaian'),
-      headers: {"Authorization": "Bearer $token"},
-    );
+    try {
+      final response = await http.get(
+        Uri.parse('https://911292b07b21.ngrok-free.app/pakaian'),
+        headers: {"Authorization": "Bearer $token"},
+      );
 
-    if (response.statusCode == 200) {
-      final List jsonData = jsonDecode(response.body);
-      final List<Pakaian> pakaianList =
-          jsonData.map((item) => Pakaian.fromJson(item)).toList();
+      if (response.statusCode == 200) {
+        final List jsonData = jsonDecode(response.body);
+        final List<Pakaian> pakaianList =
+            jsonData.map((item) => Pakaian.fromJson(item)).toList();
 
-      final bajuItems =
-          pakaianList.where((item) => item.type == 'baju').toList();
-      final celanaItems =
-          pakaianList.where((item) => item.type == 'celana').toList();
+        final bajuItems =
+            pakaianList.where((item) => item.type == 'baju').toList();
+        final celanaItems =
+            pakaianList.where((item) => item.type == 'celana').toList();
 
-      bajuList.value = bajuItems.map((e) => e.imageUrl).toList();
+        bajuList.value = bajuItems.map((e) => e.imageUrl).toList();
 
-      celanaList.clear();
-      celanaInfo.clear();
-      for (final item in celanaItems) {
-        celanaList.add(item.imageUrl);
-        celanaInfo[item.imageUrl] = item.panjangPendek;
+        celanaList.clear();
+        celanaData.clear();
+        for (final item in celanaItems) {
+          celanaList.add(item.imageUrl);
+          celanaData[item.imageUrl] = item;
+        }
+
+        if (bajuList.isNotEmpty) selectedBaju.value = bajuList.first;
+        if (celanaList.isNotEmpty) {
+          selectedCelana.value = celanaList.first;
+        }
+      } else {
+        Get.snackbar("Error", "Gagal memuat pakaian.");
       }
-
-      if (bajuList.isNotEmpty) selectedBaju.value = bajuList.first;
-      if (celanaList.isNotEmpty) {
-        selectedCelana.value = celanaList.first;
-        celanaType = celanaInfo[selectedCelana.value];
-      }
-    } else {
-      Get.snackbar("Error", "Gagal memuat pakaian.");
+    } catch (e) {
+      Get.snackbar("Error", "Terjadi kesalahan saat mengambil data.");
     }
-  } catch (e) {
-    Get.snackbar("Error", "Terjadi kesalahan saat mengambil data.");
   }
-}
+
   void selectCelana(String url) {
     selectedCelana.value = url;
-    celanaType = celanaInfo[url];
+  }
+
+  Future<void> nilaiOutfit() async {
+    final token = box.read('token');
+    if (token == null) return;
+
+    final baju = selectedBaju.value;
+    final celana = selectedCelana.value;
+
+    if (baju.isEmpty || celana.isEmpty) {
+      Get.snackbar("Error", "Pakaian belum dipilih.");
+      return;
+    }
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://911292b07b21.ngrok-free.app/nilai-outfit'),
+        headers: {
+          "Authorization": "Bearer $token",
+          "Content-Type": "application/json",
+        },
+        body: jsonEncode({
+          "baju_url": baju,
+          "celana_url": celana,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        final penilaian = data['penilaian'] ?? 'Tidak ada respon';
+        Get.defaultDialog(
+          title: "Penilaian Outfit",
+          content: Text(penilaian),
+        );
+      } else {
+        Get.snackbar("Gagal", "Tidak bisa menilai outfit.");
+      }
+    } catch (e) {
+      Get.snackbar("Error", "Gagal menghubungi server.");
+    }
   }
 
   void requestPermission() async {
@@ -193,7 +230,10 @@ Future<void> fetchUserPakaian() async {
                 (kneeLeft.dy + kneeRight.dy) / 2,
               );
 
-              final celanaHeightValue = celanaType == 'pendek'
+              final celanaModel = celanaData[selectedCelana.value];
+              final isPendek = celanaModel?.panjangPendek == 'pendek';
+
+              final celanaHeightValue = isPendek
                   ? (centerKnee.dy - centerHip.dy) * 0.5
                   : (centerKnee.dy - centerHip.dy);
 

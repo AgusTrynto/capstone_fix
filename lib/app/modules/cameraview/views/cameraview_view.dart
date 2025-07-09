@@ -1,150 +1,138 @@
-import 'package:capstone/app/modules/cameraview/controllers/cameraview_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:camera/camera.dart';
+import '../controllers/cameraview_controller.dart';
 
 class CameraviewView extends GetView<CameraviewController> {
-  const CameraviewView({super.key});
+  const CameraviewView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      if (!controller.isInitialized.value) {
-        return const Scaffold(
-          body: Center(child: CircularProgressIndicator()),
-        );
-      }
+    return Scaffold(
+      body: Obx(() {
+        if (!controller.isInitialized.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
 
-      return Scaffold(
-        body: Stack(
+        return Stack(
           children: [
-            // Kamera
-            Container(
-              key: controller.cameraKey,
-              width: double.infinity,
-              height: double.infinity,
-              child: CameraPreview(controller.cameraController),
-            ),
+            Center(child: CameraPreview(controller.cameraController)),
 
-            // Gambar baju
+            // Baju
             if (controller.bajuOffset.value != null &&
                 controller.bajuWidth.value != null &&
-                controller.bajuHeight.value != null &&
-                controller.selectedBaju.value.isNotEmpty)
+                controller.bajuHeight.value != null)
               Positioned(
-                left: controller.bajuOffset.value!.dx - controller.bajuWidth.value! / 2,
-                top: controller.bajuOffset.value!.dy - controller.bajuHeight.value! / 2,
-                child: Image.network(
-                  controller.selectedBaju.value,
-                  width: controller.bajuWidth.value,
-                  height: controller.bajuHeight.value,
-                  fit: BoxFit.fill,
-                ),
+                left: controller.bajuOffset.value!.dx,
+                top: controller.bajuOffset.value!.dy,
+                width: controller.bajuWidth.value!,
+                height: controller.bajuHeight.value!,
+                child: controller.selectedBaju.value.isNotEmpty
+                    ? Image.network(controller.selectedBaju.value, fit: BoxFit.cover)
+                    : const SizedBox(),
               ),
 
-            // Gambar celana
+            // Celana
             if (controller.celanaOffset.value != null &&
                 controller.celanaWidth.value != null &&
-                controller.celanaHeight.value != null &&
-                controller.selectedCelana.value.isNotEmpty)
+                controller.celanaHeight.value != null)
               Positioned(
-                left: controller.celanaOffset.value!.dx - controller.celanaWidth.value! / 2,
-                top: controller.celanaOffset.value!.dy - controller.celanaHeight.value! / 2,
-                child: Image.network(
-                  controller.selectedCelana.value,
-                  width: controller.celanaWidth.value,
-                  height: controller.celanaHeight.value,
-                  fit: BoxFit.fill,
-                ),
+                left: controller.celanaOffset.value!.dx,
+                top: controller.celanaOffset.value!.dy,
+                width: controller.celanaWidth.value!,
+                height: controller.celanaHeight.value!,
+                child: controller.selectedCelana.value.isNotEmpty
+                    ? Image.network(controller.selectedCelana.value, fit: BoxFit.cover)
+                    : const SizedBox(),
               ),
 
-            // Daftar baju dan celana di bawah layar
+            // ===== ✅ Tombol "Nilai Outfit" =====
             Positioned(
-              bottom: 0,
+              bottom: 180,
+              right: 20,
+              child: ElevatedButton.icon(
+                onPressed: controller.nilaiOutfit, // panggil ke controller
+                icon: const Icon(Icons.check),
+                label: const Text("Nilai Outfit"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueAccent,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                ),
+              ),
+            ),
+
+            // Pilihan baju
+            Positioned(
+              bottom: 100,
               left: 0,
               right: 0,
-              child: Container(
-                color: Colors.black.withOpacity(0.4),
-                padding: const EdgeInsets.only(top: 8, bottom: 16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // 🔹 Baju
-                    SizedBox(
-                      height: 80,
-                      child: Obx(() {
-                        if (controller.bajuList.isEmpty) {
-                          return const Center(child: Text("Tidak ada baju."));
-                        }
-                        return ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: controller.bajuList.length,
-                          itemBuilder: (context, index) {
-                            final url = controller.bajuList[index];
-                            return GestureDetector(
-                              onTap: () {
-                                controller.selectedBaju.value = url;
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 8),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: controller.selectedBaju.value == url
-                                        ? Colors.blue
-                                        : Colors.transparent,
-                                    width: 2,
-                                  ),
-                                ),
-                                child: Image.network(url, width: 60, height: 60),
-                              ),
-                            );
-                          },
-                        );
-                      }),
-                    ),
+              child: SizedBox(
+                height: 80,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: controller.bajuList.length,
+                  itemBuilder: (context, index) {
+                    final url = controller.bajuList[index];
+                    return GestureDetector(
+                      onTap: () {
+                        controller.selectedBaju.value = url;
+                      },
+                      child: Obx(() => Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 8),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: controller.selectedBaju.value == url ? Colors.blue : Colors.transparent,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Image.network(url, width: 60, height: 60, fit: BoxFit.cover),
+                      )),
+                    );
+                  },
+                ),
+              ),
+            ),
 
-                    const SizedBox(height: 10),
-
-                    // 🔸 Celana
-                    SizedBox(
-                      height: 80,
-                      child: Obx(() {
-                        if (controller.celanaList.isEmpty) {
-                          return const Center(child: Text("Tidak ada celana."));
-                        }
-                        return ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: controller.celanaList.length,
-                          itemBuilder: (context, index) {
-                            final url = controller.celanaList[index];
-                            return GestureDetector(
-                              onTap: () {
-                                controller.selectedCelana.value = url;
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 8),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: controller.selectedCelana.value == url
-                                        ? Colors.blue
-                                        : Colors.transparent,
-                                    width: 2,
-                                  ),
-                                ),
-                                child: Image.network(url, width: 60, height: 60),
-                              ),
-                            );
-                          },
-                        );
-                      }),
-                    ),
-                  ],
+            // Pilihan celana
+            Positioned(
+              bottom: 10,
+              left: 0,
+              right: 0,
+              child: SizedBox(
+                height: 80,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: controller.celanaList.length,
+                  itemBuilder: (context, index) {
+                    final url = controller.celanaList[index];
+                    return GestureDetector(
+                      onTap: () {
+                        controller.selectedCelana.value = url;
+                      },
+                      child: Obx(() => Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 8),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: controller.selectedCelana.value == url ? Colors.blue : Colors.transparent,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Image.network(url, width: 60, height: 60, fit: BoxFit.cover),
+                      )),
+                    );
+                  },
                 ),
               ),
             ),
           ],
-        ),
-      );
-    });
+        );
+      }),
+    );
   }
 }

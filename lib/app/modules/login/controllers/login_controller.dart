@@ -20,7 +20,7 @@ class LoginController extends GetxController {
 
     try {
       final response = await http.post(
-        Uri.parse('https://5f4df4eb7c85.ngrok-free.app/api/login'),
+        Uri.parse('https://911292b07b21.ngrok-free.app/api/login'),
         headers: {"Content-Type": "application/json", "x-api-key": "123"},
         body: json.encode({"email": email, "password": password}),
       );
@@ -65,7 +65,7 @@ class LoginController extends GetxController {
       }
 
       final response = await http.post(
-        Uri.parse('https://5f4df4eb7c85.ngrok-free.app/api/google-login'),
+        Uri.parse('https://911292b07b21.ngrok-free.app/api/google-login'),
         headers: {"Content-Type": "application/json", "x-api-key": "123"},
         body: json.encode({"idToken": idToken}),
       );

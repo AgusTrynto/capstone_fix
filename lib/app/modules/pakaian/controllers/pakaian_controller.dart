@@ -11,7 +11,7 @@ class PakaianController extends GetxController
   final ImagePicker picker = ImagePicker();
   final box = GetStorage();
 
-  final String backendUrl = 'https://5f4df4eb7c85.ngrok-free.app';
+  final String backendUrl = 'https://911292b07b21.ngrok-free.app';
 
   late TabController tabController;
   late PageController pageController;
